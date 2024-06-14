@@ -3,11 +3,14 @@ from PIL import Image
 from io import BytesIO
 from img2vec_pytorch import Img2Vec
 import streamlit as st
+import os
 
 #NOTE don't forget to upload the picke (model) file to your Google Colab First
 #to run this code
 #you can use any model that is capable of classifiying images that uses img2vec_pytorch
-with open('./model_needs_npk.p', 'rb') as f:
+current_dir = os.path.dirname(os.path.abspath(__file__))
+filename = os.path.join(current_dir, 'model_needs_npk.p')
+with open(filename, 'rb') as f:
     model = pickle.load(f)
 
 img2vec = Img2Vec()

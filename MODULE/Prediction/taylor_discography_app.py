@@ -1,11 +1,19 @@
 import streamlit as st
 import pandas as pd
 import pickle
+import os
+
+# Get the absolute path of the file
+current_dir = os.path.dirname(os.path.abspath(__file__))
+filename = os.path.join(current_dir, 'taylor_discography_model.sav')
 
 # Load the trained model from the saved file
-filename = './taylor_discography_model.sav'
-loaded_model = pickle.load(open(filename, 'rb'))
-
+try:
+    with open(filename, 'rb') as file:
+        loaded_model = pickle.load(file)
+    st.text("Model loaded successfully")
+except Exception as e:
+    st.text(f"Error loading model: {e}")
 # Define a function to use the model to make predictions
 def predict_song(features):
     song_name = loaded_model.predict([features])[0]

@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 import pickle
 from nltk.corpus import names
+import os
 
 # Define the layout
 st.markdown("""
@@ -15,7 +16,8 @@ st.markdown("""
 message = st.text_input("")
 
 # Load the trained Naive Bayes classifier from the saved file
-filename = './emotion_classifier_model.sav'
+current_dir = os.path.dirname(os.path.abspath(__file__))
+filename = os.path.join(current_dir, 'emotion_classifier_model.sav')
 loaded_model = pickle.load(open(filename, 'rb'))
 
 # Define features (words) and their corresponding labels (emotions)

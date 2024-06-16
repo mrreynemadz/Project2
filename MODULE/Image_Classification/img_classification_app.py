@@ -10,7 +10,7 @@ import base64
 #NOTE don't forget to upload the picke (model) file to your Google Colab First
 #to run this code
 #you can use any model that is capable of classifiying images that uses img2vec_pytorch
-with open('./MODULE/Image_Classification/model_needs_npk.p', 'rb') as f:
+with open('model_needs_npk.p', 'rb') as f:
     model = pickle.load(f)
 
 

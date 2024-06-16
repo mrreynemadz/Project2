@@ -14,8 +14,12 @@ st.write(
     ":grin: We'll try to predict the image on what features it was trained via the uploaded image :grin:"
 )
 
+# Print the current working directory for debugging
+st.text(f"Current working directory: {os.getcwd()}")
+
 # Load the model from the specified path
-file_path = 'model_needs_npk.p'
+current_dir = os.path.dirname(os.path.abspath(__file__))
+file_path = os.path.join(current_dir, 'model_needs_npk.p')
 model = None
 
 if os.path.exists(file_path):

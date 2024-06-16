@@ -11,9 +11,17 @@ import os
 #NOTE don't forget to upload the picke (model) file to your Google Colab First
 #to run this code
 #you can use any model that is capable of classifiying images that uses img2vec_pytorch
-with open('Image_Classification/model_needs_npk.p', 'rb') as f:
-    model = pickle.load(f)
 
+file_path = 'model_needs_npk.p'
+
+if os.path.exists(file_path):
+    with open(file_path, 'rb') as f:
+        try:
+            model = pickle.load(f)
+        except Exception as e:
+            print(f"Error loading pickle file: {e}")
+else:
+    print(f"File not found: {file_path}")
 
 img2vec = Img2Vec()
 

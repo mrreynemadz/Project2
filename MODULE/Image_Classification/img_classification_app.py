@@ -4,6 +4,7 @@ from PIL import Image
 import streamlit as st
 from io import BytesIO
 import os
+import sklearn
 
 # Set the page configuration for the Streamlit app
 st.set_page_config(layout="wide", page_title="Cat Breeds Classifier")
@@ -17,6 +18,14 @@ st.write(
 # Print the current working directory for debugging
 st.text(f"Current working directory: {os.getcwd()}")
 
+# Custom Unpickler to handle _Scorer attribute error
+class CustomUnpickler(pickle.Unpickler):
+    def find_class(self, module, name):
+        if module == 'sklearn.metrics._scorer' and name == '_Scorer':
+            from sklearn.metrics import _scorer
+            return _scorer._Scorer
+        return super().find_class(module, name)
+
 # Load the model from the specified path
 current_dir = os.path.dirname(os.path.abspath(__file__))
 file_path = os.path.join(current_dir, 'model_needs_npk.p')
@@ -25,7 +34,7 @@ model = None
 if os.path.exists(file_path):
     with open(file_path, 'rb') as f:
         try:
-            model = pickle.load(f)
+            model = CustomUnpickler(f).load()
             st.text("Model loaded successfully")
         except Exception as e:
             st.text(f"Error loading model: {e}")

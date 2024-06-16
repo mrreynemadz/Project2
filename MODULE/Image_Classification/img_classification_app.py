@@ -5,15 +5,16 @@ import streamlit as st
 from io import BytesIO
 import os
 
-# Streamlit Web App Interface
+# Set the page configuration for the Streamlit app
 st.set_page_config(layout="wide", page_title="Cat Breeds Classifier")
 
+# Write the title and description for the app
 st.write("## This is a demo of an Image Classification Model in Python!")
 st.write(
     ":grin: We'll try to predict the image on what features it was trained via the uploaded image :grin:"
 )
 
-# Load the model
+# Load the model from the specified path
 file_path = 'model_needs_npk.p'
 model = None
 
@@ -27,12 +28,13 @@ if os.path.exists(file_path):
 else:
     st.text(f"File not found: {file_path}")
 
-# Initialize Img2Vec
+# Initialize Img2Vec for image feature extraction
 img2vec = Img2Vec()
 
+# Define the maximum file size for uploads (5MB)
 MAX_FILE_SIZE = 5 * 1024 * 1024  # 5MB
 
-# Download the fixed image
+# Function to convert image to bytes for downloading
 @st.cache_data
 def convert_image(img):
     buf = BytesIO()
@@ -59,10 +61,10 @@ def fix_image(upload):
     except Exception as e:
         st.error(f"Error making prediction: {e}")
 
-# Streamlit columns
+# Create columns in the Streamlit app for layout
 col1, col2 = st.columns(2)
 
-# File uploader
+# File uploader widget for uploading images
 my_upload = st.file_uploader("Upload an image", type=["png", "jpg", "jpeg", "jfif"])
 
 # Process the uploaded file if it exists
